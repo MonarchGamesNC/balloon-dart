@@ -85,7 +85,9 @@ bool Balloon::IsClicked(Vector2 clickPosition) {
     return false;
 }
 
-
+bool Balloon::IsPopped() {
+    return isPopped;
+}
 
 // Pop balloon (hide balloon)
 // move off screen then delete

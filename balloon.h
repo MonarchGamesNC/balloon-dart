@@ -10,6 +10,7 @@ class Balloon {
         void Update();
         void Pop();
         bool IsClicked(Vector2 clickPosition);
+        bool IsPopped();
     private:
         bool isPopped = false;
         float scaleFactor;

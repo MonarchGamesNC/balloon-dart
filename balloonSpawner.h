@@ -11,6 +11,7 @@ class BalloonSpawner {
         void UnloadTextures();
     
     private:
+        std::vector<float> spawnPoints {};
         Texture2D texture;
         Timer timer;
         std::vector<Balloon> balloonsSpawned = {};

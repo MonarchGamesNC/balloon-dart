@@ -12,7 +12,7 @@ int main(void) {
     const int screenWidth = 1200;
     const int screenHeight = 720;
 
-    InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+    InitWindow(screenWidth, screenHeight, "Balloon Popper Game");
     SetWindowState(FLAG_WINDOW_RESIZABLE); // Allow the user to resize the window
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
@@ -54,10 +54,8 @@ int main(void) {
         //----------------------------------------------------------------------------------
         BeginDrawing();
             ClearBackground(RAYWHITE);
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
             ballonSpawner.Draw();
 
-            // DrawTexture(balloon.balloonTexture, balloon.position.x, balloon.position.y, WHITE);     
         EndDrawing();
         //----------------------------------------------------------------------------------
     }
