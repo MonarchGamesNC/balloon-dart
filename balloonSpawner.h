@@ -4,15 +4,16 @@
 
 class BalloonSpawner {
     public:
-        BalloonSpawner(Texture2D texture, float spawnRate);
         void Spawn();
         void Update();
         void Draw();
         void UnloadTextures();
+        BalloonSpawner(Texture2D texture, float spawnRate);
     
     private:
-        std::vector<float> spawnPoints {};
-        Texture2D texture;
         Timer timer;
+        Texture2D texture;
+        float lastSpawnPoint;
+        std::vector<float> spawnPoints {};
         std::vector<Balloon> balloonsSpawned = {};
 };

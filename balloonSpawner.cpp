@@ -15,12 +15,19 @@ BalloonSpawner::BalloonSpawner(Texture2D texture, float spawnRate) {
 
     // Add spawn points
     // TODO - Make list based on screen width
+    spawnPoints.reserve(5);
     spawnPoints = {
-        100, 200, 300, 400, 500, 600, 700, 800, 900
+        100, 300, 500, 700, 900
     };
+
+    balloonsSpawned.reserve(5);
 }
 
 void BalloonSpawner::Spawn() {
+    if (balloonsSpawned.size() == 5) {
+        return;
+    }
+
     // Pick a random spawn point from the
     // list of spawn points, and spawn a balloon there
     // 1. Create a list of spawn points (DONE)
