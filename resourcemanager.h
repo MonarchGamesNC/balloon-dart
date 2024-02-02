@@ -7,4 +7,5 @@ class ResourceManager {
         void LoadResources();
         void UnloadAllResources();
         Texture2D BlueBaloon;
+		Music BGMusic;
 };

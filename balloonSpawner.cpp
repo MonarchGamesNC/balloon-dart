@@ -23,9 +23,11 @@ BalloonSpawner::BalloonSpawner(Texture2D texture, float spawnRate) {
 void BalloonSpawner::Spawn() {
     // Pick a random spawn point from the
     // list of spawn points, and spawn a balloon there
-    // 1. Create a list of spawn points
-    // 2. Pick a random spawn point
-    // 3. Spawn a balloon at that spawn point
+    // 1. Create a list of spawn points (DONE)
+    // 2. Pick a random spawn point (DONE)
+    // 3. Spawn a balloon at that spawn point (DONE)
+	// 4. TODO: Pick random balloon color
+	// 5. TODO: Play sound depending on color of balloon
 
     float startingY = (float)(GetScreenHeight()+200);
 
@@ -40,12 +42,12 @@ void BalloonSpawner::Spawn() {
     );
 
     // Print out the number of balloons spawned
-    std::cout << "Balloons before spawned: " << balloonsSpawned.size() << std::endl;
+    // std::cout << "Balloons before spawned: " << balloonsSpawned.size() << std::endl;
 
     balloonsSpawned.push_back(balloon);
 
     // Print out the number of balloons spawned
-    std::cout << "Balloons after spawned: " << balloonsSpawned.size() << std::endl;
+    // std::cout << "Balloons after spawned: " << balloonsSpawned.size() << std::endl;
 }
 
 void BalloonSpawner::Update() {

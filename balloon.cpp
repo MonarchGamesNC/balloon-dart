@@ -52,7 +52,7 @@ void Balloon::Update() {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
         // Check if mouse is in ballon center circle
         if (IsClicked(GetMousePosition())) {
-            std::cout << "Mouse is inside balloon" << std::endl;
+            // std::cout << "Mouse is inside balloon" << std::endl;
             Pop();
         }
     }
@@ -92,7 +92,7 @@ bool Balloon::IsPopped() {
 // Pop balloon (hide balloon)
 // move off screen then delete
 void Balloon::Pop() {
-    std::cout << "Popping balloon" << std::endl;
+    // std::cout << "Popping balloon" << std::endl;
     // Hide the balloon... later animate pop
     isPopped = true;
     collider.x = (float)(GetScreenWidth() * 2);
