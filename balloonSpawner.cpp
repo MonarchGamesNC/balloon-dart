@@ -33,8 +33,9 @@ void BalloonSpawner::Spawn() {
     // 1. Create a list of spawn points (DONE)
     // 2. Pick a random spawn point (DONE)
     // 3. Spawn a balloon at that spawn point (DONE)
-	// 4. TODO: Pick random balloon color
-	// 5. TODO: Play sound depending on color of balloon
+    // 4. TODO: Make sure next random spawn isn't the same as the last
+	// 5. TODO: Pick random balloon color
+	// 6. TODO: Play sound depending on color of balloon
 
     float startingY = (float)(GetScreenHeight()+200);
 
