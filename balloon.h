@@ -5,6 +5,7 @@ class Balloon {
         Texture2D balloonTexture;
         Vector2 center;
         Vector2 position;
+        Balloon();
         Balloon(Texture2D balloonTexture, Vector2 position, Vector2 velocity);
         void Draw();
         void Update();

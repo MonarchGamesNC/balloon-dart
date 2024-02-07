@@ -1,3 +1,5 @@
+#ifndef RESOURCEMANAGER_H
+#define RESOURCEMANAGER_H
 #include <string>
 #include "raylib.h"
 
@@ -9,3 +11,5 @@ class ResourceManager {
         Texture2D BlueBaloon;
 		Music BGMusic;
 };
+
+#endif

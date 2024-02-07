@@ -1,6 +1,6 @@
 #include <raylib.h>
-#include "timer.h"
 #include <iostream>
+#include "timer.h"
 
 Timer::Timer() {
     this->lifetimeTime = 0.0f;
@@ -36,7 +36,11 @@ void Timer::Tick() {
 
     // If the timer has expired, call the callback
     if (lifetimeTime <= 0) {
-        callback();
+        std::cout << "Timer expired" << std::endl;
+        // FIXME: using this in balloonSpawner.cpp causes a segfault
+        // need to figure out why at a later time but for this project
+        // it's not necessary, just keep on chucking through code
+        // callback();
 
         if (loop) {
             lifetimeTime = 3.0f; // TODO: don't hardcode this
@@ -48,4 +52,5 @@ void Timer::Tick() {
     }
 
     lifetimeTime -= GetFrameTime();
+    std::cout << "Lifetime time: " << lifetimeTime << std::endl;
 }

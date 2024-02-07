@@ -1,6 +1,3 @@
-#if false
-#endif
-
 #include "screen.h"
 
 class LogoScreen : public Screen {

@@ -1,30 +1,37 @@
+#include <iostream>
+#include <vector>
 #include "raylib.h"
 #include "balloonSpawner.h"
-#include <iostream>
 
+
+BalloonSpawner::BalloonSpawner() {
+    std::cout << "BalloonSpawner default constructor" << std::endl;
+    std::cout << "Balloons before spawned: " << balloonsSpawned.size() << std::endl;
+    std::cout << "Balloons capacity: " << balloonsSpawned.capacity() << std::endl;
+    // Default constructor
+}
 
 BalloonSpawner::BalloonSpawner(Texture2D texture, float spawnRate) {
-    this->texture = texture;
-    
-    timer = Timer(spawnRate, true, [&](){
-        Spawn();
-    });
+    std::cout << "BalloonSpawner 2nd constructor" << std::endl;
+    std::cout << "2nd Balloons before spawned: " << balloonsSpawned.size() << std::endl;
+    std::cout << "2nd Balloons capacity: " << balloonsSpawned.capacity() << std::endl;
 
-    // Start ticking
-    timer.Start();
+    this->spawnRate = spawnRate;
+    this->lifetimeTime = spawnRate;
+    this->texture = texture;
 
     // Add spawn points
     // TODO - Make list based on screen width
-    spawnPoints.reserve(5);
-    spawnPoints = {
+    this->spawnPoints.reserve(5);
+    this->spawnPoints = {
         100, 300, 500, 700, 900
     };
-
-    balloonsSpawned.reserve(5);
 }
 
 void BalloonSpawner::Spawn() {
-    if (balloonsSpawned.size() == 5) {
+    if (balloonsSpawned.size() >= 5) {
+        std::cout << "size reached: " << balloonsSpawned.size() << std::endl;
+        std::cout << "capacity reached: " << balloonsSpawned.capacity() << std::endl;
         return;
     }
 
@@ -40,32 +47,32 @@ void BalloonSpawner::Spawn() {
     float startingY = (float)(GetScreenHeight()+200);
 
     // Randomly pick a spawn point
-    int randomIndex = GetRandomValue(0, spawnPoints.size()-1);
+    int randomIndex = GetRandomValue(0, spawnPoints.size() - 1);
+    std::cout << "Random index: " << randomIndex << std::endl;
 
-    Balloon balloon = Balloon(
+    // Print out the number of balloons spawned
+    std::cout << "Balloons before spawned: " << balloonsSpawned.size() << std::endl;
+    std::cout << "Balloons capacity: " << balloonsSpawned.capacity() << std::endl;
+
+    balloonsSpawned.emplace_back(Balloon(
         texture,
-        // Spawn off screen
         Vector2{ spawnPoints[randomIndex], startingY},
         Vector2{ 0, -2.0f}
-    );
+    ));
 
     // Print out the number of balloons spawned
-    // std::cout << "Balloons before spawned: " << balloonsSpawned.size() << std::endl;
-
-    balloonsSpawned.push_back(balloon);
-
-    // Print out the number of balloons spawned
-    // std::cout << "Balloons after spawned: " << balloonsSpawned.size() << std::endl;
+    std::cout << "Balloons after spawned: " << balloonsSpawned.size() << std::endl;
 }
 
 void BalloonSpawner::Update() {
-    timer.Tick();
+    this->spawnTick(); // Check if we need to spawn a balloon
 
+    // Always start with a balloon
     if (balloonsSpawned.size() == 0) {
         Spawn();
     }
 
-    for (int i = 0; i < balloonsSpawned.size(); i++) {
+    for (int i = 0; i < (int)balloonsSpawned.size(); i++) {
         // Store index in local loop variable
         Balloon &balloon = balloonsSpawned[i];
 
@@ -79,13 +86,24 @@ void BalloonSpawner::Update() {
 }
 
 void BalloonSpawner::Draw() {
-    for (int i = 0; i < balloonsSpawned.size(); i++) {
+    for (int i = 0; i < (int)balloonsSpawned.size(); i++) {
         balloonsSpawned[i].Draw();
     }
 }
 
 void BalloonSpawner::UnloadTextures() {
-    for (int i = 0; i < balloonsSpawned.size(); i++) {
+    for (int i = 0; i < (int)balloonsSpawned.size(); i++) {
         UnloadTexture(balloonsSpawned[i].balloonTexture);
+    }
+}
+
+void BalloonSpawner::spawnTick() {
+    std::cout << "Spawn tick" << std::endl;
+     if (lifetimeTime <= 0) {
+        std::cout << "Timer expired" << std::endl;
+        Spawn();
+        lifetimeTime = spawnRate; // TODO: don't hardcode this
+    } else {
+        lifetimeTime -= GetFrameTime();
     }
 }

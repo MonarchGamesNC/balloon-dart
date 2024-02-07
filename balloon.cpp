@@ -2,6 +2,11 @@
 #include "balloon.h"
 #include <iostream>
 
+Balloon::Balloon() {
+    // Default constructor
+    // Not sure if this is needed
+}
+
 Balloon::Balloon(Texture2D _balloonTexture, Vector2 _position, Vector2 _velocity) {
     // Load texture internally?
     balloonTexture = _balloonTexture;
