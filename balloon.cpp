@@ -1,6 +1,6 @@
+#include <iostream>
 #include "raylib.h"
 #include "balloon.h"
-#include <iostream>
 
 Balloon::Balloon() {
     // Default constructor
@@ -62,23 +62,17 @@ void Balloon::Update() {
         }
     }
 
+    if (isPopped) return;
 
-    if (isPopped) {
-        return;
-    }
-
-    position.x += velocity.x;
-    position.y += velocity.y;
-
-    // Check if balloon is off screen
-    if (position.y < -250) {
-        // Pop balloon
-        Pop();
-    }
-
-    // Update collider
+    position.x += (velocity.x * GetFrameTime()) * 75;
+    position.y += (velocity.y * GetFrameTime()) * 75;
+	
+	// Update collider
     collider.x = position.x - (collider.width / 2);
     collider.y = position.y - (collider.height / 2);
+    
+	// Check if balloon is off screen
+    if (position.y < -250) Pop();
 }
 
 bool Balloon::IsClicked(Vector2 clickPosition) {

@@ -14,11 +14,12 @@ class BalloonSpawner {
     private:
         Timer timer;
         Texture2D texture;
-        float lastSpawnPoint;
+        int lastSpawnPointIndex;
         float spawnRate;
         float lifetimeTime; // TODO: rename this to something more accurate
         std::vector<float> spawnPoints {};
         std::vector<Balloon> balloonsSpawned = {};
 
         void spawnTick();
+		int getRandomSpawnPoint();
 };

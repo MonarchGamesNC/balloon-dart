@@ -5,17 +5,10 @@
 
 
 BalloonSpawner::BalloonSpawner() {
-    std::cout << "BalloonSpawner default constructor" << std::endl;
-    std::cout << "Balloons before spawned: " << balloonsSpawned.size() << std::endl;
-    std::cout << "Balloons capacity: " << balloonsSpawned.capacity() << std::endl;
     // Default constructor
 }
 
 BalloonSpawner::BalloonSpawner(Texture2D texture, float spawnRate) {
-    std::cout << "BalloonSpawner 2nd constructor" << std::endl;
-    std::cout << "2nd Balloons before spawned: " << balloonsSpawned.size() << std::endl;
-    std::cout << "2nd Balloons capacity: " << balloonsSpawned.capacity() << std::endl;
-
     this->spawnRate = spawnRate;
     this->lifetimeTime = spawnRate;
     this->texture = texture;
@@ -40,15 +33,14 @@ void BalloonSpawner::Spawn() {
     // 1. Create a list of spawn points (DONE)
     // 2. Pick a random spawn point (DONE)
     // 3. Spawn a balloon at that spawn point (DONE)
-    // 4. TODO: Make sure next random spawn isn't the same as the last
+    // 4. Make sure next random spawn isn't the same as the last (DONE)
 	// 5. TODO: Pick random balloon color
 	// 6. TODO: Play sound depending on color of balloon
 
     float startingY = (float)(GetScreenHeight()+200);
 
     // Randomly pick a spawn point
-    int randomIndex = GetRandomValue(0, spawnPoints.size() - 1);
-    std::cout << "Random index: " << randomIndex << std::endl;
+	int randomIndex = this->getRandomSpawnPoint();
 
     // Print out the number of balloons spawned
     std::cout << "Balloons before spawned: " << balloonsSpawned.size() << std::endl;
@@ -98,12 +90,27 @@ void BalloonSpawner::UnloadTextures() {
 }
 
 void BalloonSpawner::spawnTick() {
-    std::cout << "Spawn tick" << std::endl;
      if (lifetimeTime <= 0) {
-        std::cout << "Timer expired" << std::endl;
         Spawn();
-        lifetimeTime = spawnRate; // TODO: don't hardcode this
+
+        lifetimeTime = spawnRate;
     } else {
         lifetimeTime -= GetFrameTime();
     }
+}
+
+int BalloonSpawner::getRandomSpawnPoint() {
+	// Randomly pick a spawn point
+    int randomIndex = GetRandomValue(0, spawnPoints.size() - 1);
+	// TODO: allow debug logs but mute on release
+    std::cout << "Random index: " << randomIndex << std::endl;
+
+	if (this->lastSpawnPointIndex == randomIndex) {
+		std::cout << "Random index matches previous: " << randomIndex << " prev: " << this->lastSpawnPointIndex << std::endl;
+		return getRandomSpawnPoint();
+	}
+
+	this->lastSpawnPointIndex = randomIndex;
+
+	return randomIndex;
 }
