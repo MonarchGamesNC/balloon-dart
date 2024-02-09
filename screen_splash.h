@@ -1,8 +1,8 @@
 #include "screen.h"
-#include "raylib.h"
-class LogoScreen : public Screen {
+
+class SplashScreen : public Screen {
 public:
-	LogoScreen();
+	SplashScreen();
 	void Init();
 	void Draw();
 	void Update();
@@ -10,7 +10,6 @@ public:
 	int Finish();
 	GameScreen GetNextScreen();
 private:
-	Font font;
 	int framesCounter = 0;
 	int finishScreen = 0;
 

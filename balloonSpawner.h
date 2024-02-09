@@ -1,3 +1,5 @@
+#ifndef BALLOONSPAWNER_H
+#define BALLOONSPAWNER_H
 #include <vector>
 #include "balloon.h"
 #include "timer.h"
@@ -23,3 +25,5 @@ class BalloonSpawner {
         void spawnTick();
 		int getRandomSpawnPoint();
 };
+
+#endif

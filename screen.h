@@ -1,6 +1,14 @@
 #ifndef SCREEN_H
 #define SCREEN_H
-#include <iostream>
+
+enum GameScreen {
+	SPLASH = 0,
+	LOGO,
+	TITLE,
+	GAMEPLAY,
+	SETTINGS,
+	CREDITS
+};
 
 class Screen {
 public:
@@ -9,6 +17,7 @@ public:
 	virtual void Update() = 0;
 	virtual void Unload() = 0;
 	virtual int Finish() = 0;
+	virtual GameScreen GetNextScreen();
 };
 
 #endif

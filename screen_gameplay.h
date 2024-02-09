@@ -5,14 +5,17 @@
 class GameplayScreen : public Screen {
 public:
 	GameplayScreen();
-    GameplayScreen(ResourceManager resourceManager);
 	void Init();
 	void Draw();
 	void Update();
 	void Unload();
 	int Finish();
+	GameScreen GetNextScreen();
 private:
-    ResourceManager resourceManager;
-    BalloonSpawner ballonSpawner;
+	bool screenReady = false;
+	// TODO:: Make this a list of textures
+	Texture balloonTexture;
+	Music bgMusic;
+	BalloonSpawner ballonSpawner;
 	
 };

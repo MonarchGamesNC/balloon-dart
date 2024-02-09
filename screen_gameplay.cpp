@@ -1,18 +1,10 @@
-#include "screen_gameplay.h"
 #include "raylib.h"
+#include "screen_gameplay.h"
+#include <iostream>
+#define BALLOON_SPAWN_RATE 3.0f
 
 GameplayScreen::GameplayScreen() {
-	Init();
-}
-
-GameplayScreen::GameplayScreen(ResourceManager resourceManager) {
-    // TODO:: Handle the resource manager here instead of in the main game loop
-    // that way each screen can have its own resource manager and unload resources
-    // once the screen is done... or something like that
-    this->resourceManager = resourceManager;
-
-    // Run other init tasks
-	Init();
+	if (!screenReady) Init();
 }
 
 // GameplayScreen::~GameplayScreen() {
@@ -20,25 +12,41 @@ GameplayScreen::GameplayScreen(ResourceManager resourceManager) {
 // }
 
 void GameplayScreen::Init() {
-    ballonSpawner = BalloonSpawner(
-        resourceManager.BlueBaloon,
-        1.0f
-    );
+	balloonTexture = LoadTexture("./assets/blue_balloon_1.png");
+	bgMusic = LoadMusicStream("./assets/bg_music_1.ogg");
+	
+	SetMusicVolume(bgMusic, 0.1);
+
+	ballonSpawner = BalloonSpawner(
+		balloonTexture,
+		BALLOON_SPAWN_RATE
+	);
+
+	screenReady = true;
 }
 
 void GameplayScreen::Update() {
-    // UpdateMusicStream(resourceManager.BGMusic);	
+	if (!IsMusicStreamPlaying(bgMusic)) {
+		PlayMusicStream(bgMusic);
+	}
 
-    ballonSpawner.Update();
+	UpdateMusicStream(bgMusic);	
+	ballonSpawner.Update();
 }
 
 void GameplayScreen::Draw() {
-    ballonSpawner.Draw();
+  ballonSpawner.Draw();
 }
 
-void GameplayScreen::Unload() {}
+void GameplayScreen::Unload() {
+	UnloadMusicStream(bgMusic);
+	UnloadTexture(balloonTexture);
+}
 
 int GameplayScreen::Finish() {
     return 0;
 }
 
+GameScreen GameplayScreen::GetNextScreen() {
+	return CREDITS;
+}

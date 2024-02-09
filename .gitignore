@@ -1,4 +1,4 @@
 *.exe
 *.dsym
 main
-balloon-dart*
+balloon-dart-*
