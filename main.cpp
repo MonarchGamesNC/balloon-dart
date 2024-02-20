@@ -5,8 +5,6 @@
 
 #define GAME_TITLE "Balloon Popper Game"
 
-// NOTE:: 'nextScreen' may be used uninitialized [-Wmaybe-uninitialized]
-// NOTE:: 'nextScreen' was declared here
 //Change to screen, no transition
 Screen* ChangeToScreen(Screen* currentScreen, int screen) {
 	// Unload current screen
@@ -15,13 +13,15 @@ Screen* ChangeToScreen(Screen* currentScreen, int screen) {
 	Screen* nextScreen;
 	// Init next screen
 	switch (screen) {
-			case LOGO:
-					nextScreen = new LogoScreen();
-					break;
-			case GAMEPLAY:
-					nextScreen = new GameplayScreen();
-					break;
-			default: break;
+		case LOGO:
+			nextScreen = new LogoScreen();
+			break;
+		case GAMEPLAY:
+			nextScreen = new GameplayScreen();
+			break;
+		default: 
+			nextScreen = new GameplayScreen();
+			break;
 	}
 
 	return nextScreen;
@@ -60,7 +60,7 @@ int main(void) {
 
 	//--------------------------------------------------------------------------------------
 	
-	Screen* currentScreen = new SplashScreen();
+	Screen* currentScreen = new LogoScreen();
   //Screen* currentScreen = new GameplayScreen();
 	
 	// Main game loop
@@ -73,17 +73,17 @@ int main(void) {
 		currentScreen->Update();
 		if (currentScreen->Finish() == 1) {
     	currentScreen = ChangeToScreen(
-				currentScreen,
-				currentScreen->GetNextScreen()
-			);
+			currentScreen,
+			currentScreen->GetNextScreen()
+		);
     }
   
 		// Draw
     //----------------------------------------------------------------------------------
     BeginDrawing();
-      ClearBackground(RAYWHITE);
-			currentScreen->Draw();
-		EndDrawing();
+    	ClearBackground(RAYWHITE);
+		currentScreen->Draw();
+	EndDrawing();
     //----------------------------------------------------------------------------------
   }
 

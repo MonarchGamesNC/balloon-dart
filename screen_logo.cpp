@@ -1,3 +1,5 @@
+#include <cstddef>
+
 #include "screen_logo.h"
 #include "raylib.h"
 
@@ -6,22 +8,17 @@ LogoScreen::LogoScreen() {
 }
 
 void LogoScreen::Init() {
-	font = LoadFont("./assets/Skincake.ttf");
-
+	font = LoadFontEx("./assets/EazyChat.ttf", 72, NULL, 0);
 	finishScreen = 0;
-  framesCounter = 0;
-  lettersCount = 0;
+	framesCounter = 0;
+	lettersCount = 0;
 
-  logoPositionX = GetScreenWidth()/2 - 128;
-  logoPositionY = GetScreenHeight()/2 - 128;
+	logoPositionX = GetScreenWidth()/2 - 250;
+	logoPositionY = GetScreenHeight()/2;
 
-  topSideRecWidth = 16;
-  leftSideRecHeight = 16;
-  bottomSideRecWidth = 16;
-  rightSideRecHeight = 16;
 
-  state = 0;
-  alpha = 1.0f;
+	state = 0;
+	alpha = 1.0f;
 }
 
 void LogoScreen::Draw() {
@@ -29,12 +26,11 @@ void LogoScreen::Draw() {
 		DrawTextEx(
 			font,
 			TextSubtext("Monarch Games", 0, lettersCount),
-			Vector2{ (float)(GetScreenWidth() / 2 - 250), (float)(GetScreenHeight() / 2)},
+			Vector2{ logoPositionX, logoPositionY},
 			72,
-			1.0f,
+			0,
 			Fade(BLACK, alpha)
 		); // Draw text using font and additional parameters
-		//if (framesCounter > 20) DrawText("powered by", logoPositionX, logoPositionY - 27, 20, Fade(DARKGRAY, alpha));
 	}
 }
 
