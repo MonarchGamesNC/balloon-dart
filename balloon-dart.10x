@@ -6,6 +6,7 @@
 		<SyncFiles>true</SyncFiles>
 		<Recursive>true</Recursive>
 		<ShowEmptyFolders>true</ShowEmptyFolders>
+		<IncludeFilesWithoutExt>false</IncludeFilesWithoutExt>
 		<IsVirtual>false</IsVirtual>
 		<IsFolder>false</IsFolder>
 		<BuildCommand>cmd /V /C &amp;quot;set RAYLIB_PATH=C:/raylib/raylib&amp;&amp; set PLATFORM=PLATFORM_DESKTOP&amp;&amp; set PROJECT_NAME=$(WorkspaceName)-$(Configuration)&amp;&amp; set OBJS=*.cpp&amp;&amp; set BUILD_MODE=$(Configuration)&amp;&amp; make&amp;quot;</BuildCommand>

@@ -15,7 +15,10 @@ private:
 	bool screenReady = false;
 	// TODO:: Make this a list of textures
 	Texture balloonTexture;
+	Texture bgGraphic;
 	Music bgMusic;
 	BalloonSpawner ballonSpawner;
+
+	void DrawBgGraphic();
 	
 };

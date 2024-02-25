@@ -60,8 +60,8 @@ int main(void) {
 
 	//--------------------------------------------------------------------------------------
 	
-	Screen* currentScreen = new LogoScreen();
-  //Screen* currentScreen = new GameplayScreen();
+	// Screen* currentScreen = new LogoScreen();
+  	Screen* currentScreen = new GameplayScreen();
 	
 	// Main game loop
 	while (!WindowShouldClose()) {   // Detect window close button or ESC key

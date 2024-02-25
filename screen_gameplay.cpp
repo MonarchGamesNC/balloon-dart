@@ -12,9 +12,11 @@ GameplayScreen::GameplayScreen() {
 // }
 
 void GameplayScreen::Init() {
-	balloonTexture = LoadTexture("./assets/blue_balloon_1.png");
-	bgMusic = LoadMusicStream("./assets/bg_music_1.ogg");
+	balloonTexture = LoadTexture("./assets/gfx/blue_balloon_1.png");
+	bgGraphic = LoadTexture("./assets/bgs/cardboard.png");
 	
+
+	bgMusic = LoadMusicStream("./assets/sfx/bg_music_1.ogg");
 	SetMusicVolume(bgMusic, 0.1);
 
 	ballonSpawner = BalloonSpawner(
@@ -35,12 +37,27 @@ void GameplayScreen::Update() {
 }
 
 void GameplayScreen::Draw() {
-  ballonSpawner.Draw();
+	DrawBgGraphic();
+	ballonSpawner.Draw();
+}
+
+void GameplayScreen::DrawBgGraphic() {
+	// Draw bg to entire screen
+	DrawTexturePro(
+        bgGraphic,
+		Rectangle { 0, 0, (float)bgGraphic.width,  (float)bgGraphic.height },
+		// TODO:: Make a static rectangle to use across
+		Rectangle { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
+		Vector2 { 0, 0 },
+        0,
+        WHITE
+    );
 }
 
 void GameplayScreen::Unload() {
 	UnloadMusicStream(bgMusic);
 	UnloadTexture(balloonTexture);
+	UnloadTexture(bgGraphic);
 }
 
 int GameplayScreen::Finish() {

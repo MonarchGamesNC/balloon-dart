@@ -8,7 +8,7 @@ LogoScreen::LogoScreen() {
 }
 
 void LogoScreen::Init() {
-	font = LoadFontEx("./assets/EazyChat.ttf", 72, NULL, 0);
+	font = LoadFontEx("./assets/fonts/EazyChat.ttf", 72, NULL, 0);
 	finishScreen = 0;
 	framesCounter = 0;
 	lettersCount = 0;
@@ -26,7 +26,7 @@ void LogoScreen::Draw() {
 		DrawTextEx(
 			font,
 			TextSubtext("Monarch Games", 0, lettersCount),
-			Vector2{ logoPositionX, logoPositionY},
+			Vector2{ (float)logoPositionX, (float)logoPositionY},
 			72,
 			0,
 			Fade(BLACK, alpha)
