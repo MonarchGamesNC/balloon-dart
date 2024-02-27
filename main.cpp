@@ -5,6 +5,8 @@
 
 #define GAME_TITLE "Balloon Popper Game"
 
+// TODO:: Enable web version of Raylib
+
 //Change to screen, no transition
 Screen* ChangeToScreen(Screen* currentScreen, int screen) {
 	// Unload current screen

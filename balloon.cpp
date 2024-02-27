@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "balloon.h"
 
+// TODO:: Animate the pop?
 Balloon::Balloon() {
     // Default constructor
     // Not sure if this is needed
@@ -26,7 +27,7 @@ Balloon::Balloon(Texture2D _balloonTexture, Vector2 _position, Vector2 _velocity
     Vector2 colliderSize = Vector2{ (float)(295*scaleFactor), (float)(365*scaleFactor) };
     Vector2 trueCenter = Vector2{ position.x - (colliderSize.x/2), position.y - (105) }; // 105 is the offset from the top of the balloon to the center of the balloon
     
-    // TODO: make triangle collider which will allow for a more accurate collision detection
+    // TODO:: make triangle collider which will allow for a more accurate collision detection
     // maybe have the triangles be negative space and then check if the mouse is in the negative space
     collider = Rectangle{ trueCenter.x, trueCenter.y, colliderSize.x, colliderSize.y };
 }

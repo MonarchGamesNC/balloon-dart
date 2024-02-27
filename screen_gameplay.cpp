@@ -1,18 +1,18 @@
+#include <iostream>
 #include "raylib.h"
 #include "screen_gameplay.h"
-#include <iostream>
+
 #define BALLOON_SPAWN_RATE 3.0f
 
+// TODO:: Make singleton to use in gameplay to keep track of score
 GameplayScreen::GameplayScreen() {
 	if (!screenReady) Init();
 }
 
-// GameplayScreen::~GameplayScreen() {
-//     Unload();
-// }
 
 void GameplayScreen::Init() {
-	balloonTexture = LoadTexture("./assets/gfx/blue_balloon_1.png");
+	this->loadTextures();
+
 	bgGraphic = LoadTexture("./assets/bgs/cardboard.png");
 	
 
@@ -20,7 +20,7 @@ void GameplayScreen::Init() {
 	SetMusicVolume(bgMusic, 0.1);
 
 	ballonSpawner = BalloonSpawner(
-		balloonTexture,
+		this->textures,
 		BALLOON_SPAWN_RATE
 	);
 
@@ -56,8 +56,14 @@ void GameplayScreen::DrawBgGraphic() {
 
 void GameplayScreen::Unload() {
 	UnloadMusicStream(bgMusic);
-	UnloadTexture(balloonTexture);
 	UnloadTexture(bgGraphic);
+
+	for (unsigned i = 0; i < this->textures.size(); i++) {
+		UnloadTexture(this->textures[i]);
+	}
+
+	// Reset vector
+	this->textures.clear();
 }
 
 int GameplayScreen::Finish() {
@@ -66,4 +72,12 @@ int GameplayScreen::Finish() {
 
 GameScreen GameplayScreen::GetNextScreen() {
 	return CREDITS;
+}
+
+void GameplayScreen::loadTextures() {
+	// Load all the textures we need for now
+	this->textures.emplace_back(LoadTexture("./assets/gfx/blue_balloon_1.png"));
+	this->textures.emplace_back(LoadTexture("./assets/gfx/green_balloon_1.png"));
+	this->textures.emplace_back(LoadTexture("./assets/gfx/orange_balloon_1.png"));
+	this->textures.emplace_back(LoadTexture("./assets/gfx/pink_balloon_1.png"));
 }

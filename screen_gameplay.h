@@ -1,3 +1,4 @@
+#include <vector>
 #include "screen.h"
 #include "resourcemanager.h"
 #include "balloonSpawner.h"
@@ -13,12 +14,13 @@ public:
 	GameScreen GetNextScreen();
 private:
 	bool screenReady = false;
-	// TODO:: Make this a list of textures
-	Texture balloonTexture;
 	Texture bgGraphic;
 	Music bgMusic;
 	BalloonSpawner ballonSpawner;
-
+	
+	std::vector<Texture2D> textures;
+	
+	void loadTextures();
 	void DrawBgGraphic();
 	
 };

@@ -43,7 +43,7 @@ void Timer::Tick() {
         // callback();
 
         if (loop) {
-            lifetimeTime = 3.0f; // TODO: don't hardcode this
+            lifetimeTime = 3.0f; // TODO:: don't hardcode this
         } else {
             started = false;
         }

@@ -8,17 +8,31 @@ BalloonSpawner::BalloonSpawner() {
     // Default constructor
 }
 
-BalloonSpawner::BalloonSpawner(Texture2D texture, float spawnRate) {
-    this->spawnRate = spawnRate;
+
+BalloonSpawner::BalloonSpawner(std::vector<Texture2D> _textures, float spawnRate) {
+	this->spawnRate = spawnRate;
     this->lifetimeTime = spawnRate;
-    this->texture = texture;
+	this->textures = _textures;
+	
+	this->texture = this->textures[1];
 
     // Add spawn points
-    // TODO - Make list based on screen width
-    this->spawnPoints.reserve(5);
+	float spawnPointOffset = GetScreenWidth() / 5;
+	this->spawnPoints.reserve(5);
     this->spawnPoints = {
-        100, 300, 500, 700, 900
+        100,
+		100+spawnPointOffset,
+		100+(spawnPointOffset*2),
+		100+(spawnPointOffset*3),
+		100+(spawnPointOffset*4)
     };
+
+	//std::cout << "Spawn point: " << 100 << std::endl;
+	//std::cout << "Spawn point: " << 100+spawnPointOffset << std::endl;
+	//std::cout << "Spawn point: " << 100+(spawnPointOffset*2) << std::endl;
+	//std::cout << "Spawn point: " << 100+(spawnPointOffset*3) << std::endl;
+	//std::cout << "Spawn point: " << 100+(spawnPointOffset*4) << std::endl;
+
 }
 
 void BalloonSpawner::Spawn() {
@@ -34,8 +48,8 @@ void BalloonSpawner::Spawn() {
     // 2. Pick a random spawn point (DONE)
     // 3. Spawn a balloon at that spawn point (DONE)
     // 4. Make sure next random spawn isn't the same as the last (DONE)
-	// 5. TODO: Pick random balloon color
-	// 6. TODO: Play sound depending on color of balloon
+	// 5. Pick random balloon color (DONE)
+	// 6. TODO:: Play sound depending on color of balloon
 
     float startingY = (float)(GetScreenHeight()+200);
 
@@ -47,7 +61,8 @@ void BalloonSpawner::Spawn() {
     std::cout << "Balloons capacity: " << balloonsSpawned.capacity() << std::endl;
 
     balloonsSpawned.emplace_back(Balloon(
-        texture,
+		// Get a random texture to spawn
+		textures[GetRandomValue(0, textures.size() - 1)],
         Vector2{ spawnPoints[randomIndex], startingY},
         Vector2{ 0, -2.0f}
     ));
@@ -87,6 +102,7 @@ void BalloonSpawner::UnloadTextures() {
     for (int i = 0; i < (int)balloonsSpawned.size(); i++) {
         UnloadTexture(balloonsSpawned[i].balloonTexture);
     }
+
 }
 
 void BalloonSpawner::spawnTick() {
@@ -102,7 +118,7 @@ void BalloonSpawner::spawnTick() {
 int BalloonSpawner::getRandomSpawnPoint() {
 	// Randomly pick a spawn point
     int randomIndex = GetRandomValue(0, spawnPoints.size() - 1);
-	// TODO: allow debug logs but mute on release
+	// TODO:: allow debug logs but mute on release
     std::cout << "Random index: " << randomIndex << std::endl;
 
 	if (this->lastSpawnPointIndex == randomIndex) {
@@ -111,6 +127,16 @@ int BalloonSpawner::getRandomSpawnPoint() {
 	}
 
 	this->lastSpawnPointIndex = randomIndex;
+
+	return randomIndex;
+}
+
+int BalloonSpawner::getRandomTextureIndex() {
+	// Randomly pick a spawn point
+    int randomIndex = GetRandomValue(0, textures.size() - 1);
+	// TODO:: allow debug logs but mute on release
+    std::cout << "Random texture: " << randomIndex << std::endl;
+
 
 	return randomIndex;
 }
