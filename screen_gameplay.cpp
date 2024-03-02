@@ -1,12 +1,18 @@
 #include <iostream>
 #include "raylib.h"
 #include "screen_gameplay.h"
+#include "score.h"
 
 #define BALLOON_SPAWN_RATE 3.0f
 
+int score = 0;
+
 // TODO:: Make singleton to use in gameplay to keep track of score
 GameplayScreen::GameplayScreen() {
-	if (!screenReady) Init();
+	if (!screenReady) {
+		Init();
+		score = 0;
+	}
 }
 
 
@@ -38,6 +44,10 @@ void GameplayScreen::Update() {
 
 void GameplayScreen::Draw() {
 	DrawBgGraphic();
+
+	// Draw score
+	DrawText(TextFormat("Score: %i", score), 10, 10, 20, WHITE);
+
 	ballonSpawner.Draw();
 }
 

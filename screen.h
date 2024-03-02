@@ -17,7 +17,7 @@ public:
 	virtual void Update() = 0;
 	virtual void Unload() = 0;
 	virtual int Finish() = 0;
-	virtual GameScreen GetNextScreen();
+	virtual GameScreen GetNextScreen() = 0;
 };
 
 #endif

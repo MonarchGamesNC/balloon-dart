@@ -2,6 +2,8 @@
 #include "raylib.h"
 #include "balloon.h"
 
+extern int score;
+
 // TODO:: Animate the pop?
 Balloon::Balloon() {
     // Default constructor
@@ -99,4 +101,5 @@ void Balloon::Pop() {
     collider.y = (float)(GetScreenHeight() * 2);
     position = Vector2{ (float)(GetScreenWidth() *2), (float)GetScreenHeight() * 2 };
     velocity = Vector2{ 0, 0 };
+    score += 1;
 }
