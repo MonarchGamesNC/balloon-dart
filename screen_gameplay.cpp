@@ -19,6 +19,8 @@ GameplayScreen::GameplayScreen() {
 void GameplayScreen::Init() {
 	this->loadTextures();
 
+
+	font = LoadFontEx("./assets/fonts/EazyChat.ttf", 32, NULL, 0);
 	bgGraphic = LoadTexture("./assets/bgs/cardboard.png");
 	
 
@@ -38,6 +40,13 @@ void GameplayScreen::Update() {
 		PlayMusicStream(bgMusic);
 	}
 
+	if (score > 10 && ballonSpawner.SpawnRate() == BALLOON_SPAWN_RATE) {
+		ballonSpawner.UpdateSpawnRate(BALLOON_SPAWN_RATE / 2);
+	} else if (score > 25 && ballonSpawner.SpawnRate() == (BALLOON_SPAWN_RATE / 2)) {
+		// Random denominator to make it super fast
+		ballonSpawner.UpdateSpawnRate(BALLOON_SPAWN_RATE / 3.5);
+	}
+
 	UpdateMusicStream(bgMusic);	
 	ballonSpawner.Update();
 }
@@ -46,7 +55,7 @@ void GameplayScreen::Draw() {
 	DrawBgGraphic();
 
 	// Draw score
-	DrawText(TextFormat("Score: %i", score), 10, 10, 20, WHITE);
+	DrawTextEx(font, TextFormat("Score %i", score), Vector2 { 10, 10 }, 32, 0, WHITE);
 
 	ballonSpawner.Draw();
 }

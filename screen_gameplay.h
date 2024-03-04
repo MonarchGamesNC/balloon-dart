@@ -16,6 +16,7 @@ private:
 	bool screenReady = false;
 	Texture bgGraphic;
 	Music bgMusic;
+	Font font;
 	BalloonSpawner ballonSpawner;
 	
 	std::vector<Texture2D> textures;

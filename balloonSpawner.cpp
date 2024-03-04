@@ -4,18 +4,13 @@
 #include "balloonSpawner.h"
 
 
-BalloonSpawner::BalloonSpawner() {
-    // Default constructor
-}
-
+BalloonSpawner::BalloonSpawner() {/* Default constructor */}
 
 BalloonSpawner::BalloonSpawner(std::vector<Texture2D> _textures, float spawnRate) {
 	this->spawnRate = spawnRate;
-    this->lifetimeTime = spawnRate;
+    this->currentTime = spawnRate;
 	this->textures = _textures;
 	
-	this->texture = this->textures[1];
-
     // Add spawn points
 	float spawnPointOffset = GetScreenWidth() / 5;
 	this->spawnPoints.reserve(5);
@@ -50,6 +45,8 @@ void BalloonSpawner::Spawn() {
     // 4. Make sure next random spawn isn't the same as the last (DONE)
 	// 5. Pick random balloon color (DONE)
 	// 6. TODO:: Play sound depending on color of balloon
+	// 		https://freesound.org/people/wubitog/sounds/188381/
+	//		https://freesound.org/people/qubodup/sounds/182856/
 
     float startingY = (float)(GetScreenHeight()+200);
 
@@ -106,12 +103,11 @@ void BalloonSpawner::UnloadTextures() {
 }
 
 void BalloonSpawner::spawnTick() {
-     if (lifetimeTime <= 0) {
+	if (currentTime <= 0) {
         Spawn();
-
-        lifetimeTime = spawnRate;
+        currentTime = spawnRate;
     } else {
-        lifetimeTime -= GetFrameTime();
+        currentTime -= GetFrameTime();
     }
 }
 
@@ -139,4 +135,12 @@ int BalloonSpawner::getRandomTextureIndex() {
 
 
 	return randomIndex;
+}
+
+void BalloonSpawner::UpdateSpawnRate(float rate) {
+	this->spawnRate = rate;
+}
+
+float BalloonSpawner::SpawnRate() {
+	return this->spawnRate;
 }
