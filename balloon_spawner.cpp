@@ -56,7 +56,6 @@ void BalloonSpawner::Spawn() {
 
 
     balloonsSpawned.emplace_back(Balloon(
-		// Get a random texture to spawn
 		textures[GetRandomValue(0, textures.size() - 1)],
         Vector2{ spawnPoints[randomIndex], startingY},
         popSound,
