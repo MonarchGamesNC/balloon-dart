@@ -7,7 +7,6 @@
 
 int score = 0;
 
-// TODO:: Make singleton to use in gameplay to keep track of score
 GameplayScreen::GameplayScreen() {
 	if (!screenReady) {
 		Init();
@@ -15,20 +14,20 @@ GameplayScreen::GameplayScreen() {
 	}
 }
 
-
 void GameplayScreen::Init() {
 	this->loadTextures();
 
+	this->font = LoadFontEx("./assets/fonts/EazyChat.ttf", 32, NULL, 0);
+	this->bgGraphic = LoadTexture("./assets/bgs/cardboard.png");
+	this->popSound = LoadSound("./assets/sfx/soft-balloon-pop.ogg");
+	SetSoundVolume(popSound, 0.7);
 
-	font = LoadFontEx("./assets/fonts/EazyChat.ttf", 32, NULL, 0);
-	bgGraphic = LoadTexture("./assets/bgs/cardboard.png");
-	
-
-	bgMusic = LoadMusicStream("./assets/sfx/bg_music_1.ogg");
-	SetMusicVolume(bgMusic, 0.1);
+	this->bgMusic = LoadMusicStream("./assets/sfx/bg_music_1.ogg");
+	SetMusicVolume(bgMusic, 0.2);
 
 	ballonSpawner = BalloonSpawner(
 		this->textures,
+		this->popSound,
 		BALLOON_SPAWN_RATE
 	);
 
@@ -42,9 +41,11 @@ void GameplayScreen::Update() {
 
 	if (score > 10 && ballonSpawner.SpawnRate() == BALLOON_SPAWN_RATE) {
 		ballonSpawner.UpdateSpawnRate(BALLOON_SPAWN_RATE / 2);
+		ballonSpawner.SetSpawnVelocity(Vector2{ 0, -3.0f });
 	} else if (score > 25 && ballonSpawner.SpawnRate() == (BALLOON_SPAWN_RATE / 2)) {
 		// Random denominator to make it super fast
 		ballonSpawner.UpdateSpawnRate(BALLOON_SPAWN_RATE / 3.5);
+		ballonSpawner.SetSpawnVelocity(Vector2{ 0, -4.0f });
 	}
 
 	UpdateMusicStream(bgMusic);	
@@ -65,7 +66,6 @@ void GameplayScreen::DrawBgGraphic() {
 	DrawTexturePro(
         bgGraphic,
 		Rectangle { 0, 0, (float)bgGraphic.width,  (float)bgGraphic.height },
-		// TODO:: Make a static rectangle to use across
 		Rectangle { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
 		Vector2 { 0, 0 },
         0,
@@ -75,6 +75,7 @@ void GameplayScreen::DrawBgGraphic() {
 
 void GameplayScreen::Unload() {
 	UnloadMusicStream(bgMusic);
+	UnloadSound(popSound);
 	UnloadTexture(bgGraphic);
 
 	for (unsigned i = 0; i < this->textures.size(); i++) {

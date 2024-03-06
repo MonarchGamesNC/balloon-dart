@@ -10,6 +10,7 @@ Timer::Timer() {
 }
 
 Timer::Timer(float time, std::function<void(void)> callback) {
+    this->time = time;
     this->lifetimeTime = time;
     this->callback = callback;
     this->loop = false;
@@ -17,6 +18,7 @@ Timer::Timer(float time, std::function<void(void)> callback) {
 }
 
 Timer::Timer(float time, bool looping, std::function<void(void)> callback) {
+    this->time = time;
     this->lifetimeTime = time;
     this->callback = callback;
     this->loop = looping;
@@ -36,14 +38,14 @@ void Timer::Tick() {
 
     // If the timer has expired, call the callback
     if (lifetimeTime <= 0) {
-        std::cout << "Timer expired" << std::endl;
+        TraceLog(LOG_DEBUG, "Timer expired");
         // FIXME: using this in balloonSpawner.cpp causes a segfault
         // need to figure out why at a later time but for this project
         // it's not necessary, just keep on chucking through code
         // callback();
 
         if (loop) {
-            lifetimeTime = 3.0f; // TODO:: don't hardcode this
+            lifetimeTime = time;
         } else {
             started = false;
         }
@@ -52,5 +54,5 @@ void Timer::Tick() {
     }
 
     lifetimeTime -= GetFrameTime();
-    std::cout << "Lifetime time: " << lifetimeTime << std::endl;
+    TraceLog(LOG_DEBUG, "Lifetime time: %f", lifetimeTime);
 }

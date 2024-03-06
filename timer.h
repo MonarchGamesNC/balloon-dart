@@ -9,6 +9,7 @@ class Timer {
         void Start();
         void Tick();
     private:
+        float time;
         float lifetimeTime;
         bool started = false;
         bool loop = false;

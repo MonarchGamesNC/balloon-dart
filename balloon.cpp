@@ -4,17 +4,17 @@
 
 extern int score;
 
-// TODO:: Animate the pop?
 Balloon::Balloon() {
     // Default constructor
     // Not sure if this is needed
 }
 
-Balloon::Balloon(Texture2D _balloonTexture, Vector2 _position, Vector2 _velocity) {
+Balloon::Balloon(Texture2D _balloonTexture, Vector2 _position, Sound _popSound, Vector2 _velocity) {
     // Load texture internally?
     balloonTexture = _balloonTexture;
     position = _position;
     velocity = _velocity;
+    popSound = _popSound;
     scaleFactor = 0.5f;
 
     // Set center
@@ -60,7 +60,6 @@ void Balloon::Update() {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
         // Check if mouse is in ballon center circle
         if (IsClicked(GetMousePosition())) {
-            // std::cout << "Mouse is inside balloon" << std::endl;
             Pop();
         }
     }
@@ -94,7 +93,7 @@ bool Balloon::IsPopped() {
 // Pop balloon (hide balloon)
 // move off screen then delete
 void Balloon::Pop() {
-    // std::cout << "Popping balloon" << std::endl;
+    PlaySound(popSound);
     // Hide the balloon... later animate pop
     isPopped = true;
     collider.x = (float)(GetScreenWidth() * 2);

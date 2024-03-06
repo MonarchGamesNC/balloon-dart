@@ -12,6 +12,9 @@ class BalloonSpawner {
         void UnloadTextures();
         BalloonSpawner();
 		BalloonSpawner(std::vector<Texture2D> _textures, float spawnRate);
+        BalloonSpawner(std::vector<Texture2D> _textures, Sound popSound,  float spawnRate);
+
+        void SetSpawnVelocity(Vector2 velocity);
 		void UpdateSpawnRate(float rate);
 		float SpawnRate();
 
@@ -19,7 +22,9 @@ class BalloonSpawner {
         Timer timer;
         int lastSpawnPointIndex;
         float spawnRate;
-		float currentTime; // TODO:: rename this to something more accurate
+        Vector2 spawnVelocity;
+		float currentTime;
+        Sound popSound;
         
 		std::vector<Texture2D> textures {};
 		std::vector<float> spawnPoints {};

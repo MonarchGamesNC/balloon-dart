@@ -1,7 +1,7 @@
 #include <vector>
 #include "screen.h"
 #include "resourcemanager.h"
-#include "balloonSpawner.h"
+#include "balloon_spawner.h"
 
 class GameplayScreen : public Screen {
 public:
@@ -16,6 +16,7 @@ private:
 	bool screenReady = false;
 	Texture bgGraphic;
 	Music bgMusic;
+	Sound popSound;
 	Font font;
 	BalloonSpawner ballonSpawner;
 	

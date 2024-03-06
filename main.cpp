@@ -1,3 +1,15 @@
+// #ifndef NDEBUG
+// // Production builds should set NDEBUG=1
+// #define NDEBUG false
+// #else
+// #define NDEBUG true
+// #endif
+
+// #ifndef DEBUG
+// #define DEBUG !NDEBUG
+// #endif
+
+#include <iostream>
 #include "raylib.h"
 #include "screen_logo.h"
 #include "screen_splash.h"
@@ -6,7 +18,6 @@
 #define GAME_TITLE "Balloon Popper Game"
 
 // TODO:: Enable web version of Raylib
-
 //Change to screen, no transition
 Screen* ChangeToScreen(Screen* currentScreen, int screen) {
 	// Unload current screen
@@ -34,6 +45,14 @@ Screen* ChangeToScreen(Screen* currentScreen, int screen) {
 // Program main entry point
 //------------------------------------------------------------------------------------
 int main(void) {
+	#ifdef RELEASE
+		SetTraceLogLevel(LOG_NONE);
+	#else
+		SetTraceLogLevel(LOG_DEBUG);
+	#endif
+
+		//emscripten_set_main_loop(mainLoop, 0, 1);
+
 	// Initialization
 	//--------------------------------------------------------------------------------------
 	const int screenWidth = 1200;
