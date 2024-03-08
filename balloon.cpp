@@ -60,6 +60,7 @@ void Balloon::Update() {
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
         // Check if mouse is in ballon center circle
         if (IsClicked(GetMousePosition())) {
+            score += 1;
             Pop();
         }
     }
@@ -74,7 +75,7 @@ void Balloon::Update() {
     collider.y = position.y - (collider.height / 2);
     
 	// Check if balloon is off screen
-    if (position.y < -250) Pop();
+    if (position.y < -250) Pop(false);
 }
 
 bool Balloon::IsClicked(Vector2 clickPosition) {
@@ -92,13 +93,13 @@ bool Balloon::IsPopped() {
 
 // Pop balloon (hide balloon)
 // move off screen then delete
-void Balloon::Pop() {
-    PlaySound(popSound);
+void Balloon::Pop(bool playSound) {
+    if (playSound) PlaySound(popSound);
+    
     // Hide the balloon... later animate pop
     isPopped = true;
     collider.x = (float)(GetScreenWidth() * 2);
     collider.y = (float)(GetScreenHeight() * 2);
     position = Vector2{ (float)(GetScreenWidth() *2), (float)GetScreenHeight() * 2 };
     velocity = Vector2{ 0, 0 };
-    score += 1;
 }

@@ -19,11 +19,11 @@ private:
 
 	int lettersCount = 0;
 
-	int topSideRecWidth = 0;
-	int leftSideRecHeight = 0;
+	// int topSideRecWidth = 0;
+	// int leftSideRecHeight = 0;
 
-	int bottomSideRecWidth = 0;
-	int rightSideRecHeight = 0;
+	// int bottomSideRecWidth = 0;
+	// int rightSideRecHeight = 0;
 
 	int state = 0;              // Logo animation states
 	float alpha = 1.0f;

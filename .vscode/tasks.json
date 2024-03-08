@@ -22,7 +22,8 @@
             },
             "osx": {
                 "args": [
-                    "PROJECT_NAME=${fileBasenameNoExtension}",
+                    "RAYLIB_PATH=/Users/celioreyes/raylib",
+                    "PROJECT_NAME=${workspaceFolderBasename}",
                     "OBJS=*.cpp",
                     "BUILD_MODE=DEBUG"
                 ]
@@ -60,19 +61,20 @@
                 "command": "C:/raylib/w64devkit/bin/mingw32-make.exe",
                 "args": [
                     "RAYLIB_PATH=C:/raylib/raylib",
-                    "PROJECT_NAME=${fileBasenameNoExtension}",
+                    "PROJECT_NAME=${workspaceFolderBasename}",
                     "OBJS=*.cpp"
                 ]
             },
             "osx": {
                 "args": [
-                    "PROJECT_NAME=${fileBasenameNoExtension}",
+                    "RAYLIB_PATH=/Users/celioreyes/raylib",
+                    "PROJECT_NAME=${workspaceFolderBasename}",
                     "OBJS=*.cpp"
                 ]
             },
             "linux": {
                 "args": [
-                    "PROJECT_NAME=${fileBasenameNoExtension}",
+                    "PROJECT_NAME=${workspaceFolderBasename}",
                     "DESTDIR=/home/linuxbrew/.linuxbrew",
                     "RAYLIB_LIBTYPE=SHARED",
                     "EXAMPLE_RUNTIME_PATH=/home/linuxbrew/.linuxbrew/lib",

@@ -13,7 +13,7 @@ class Balloon {
         
 		void Draw();
         void Update();
-        void Pop();
+        void Pop(bool playSound = true);
         bool IsClicked(Vector2 clickPosition);
         bool IsPopped();
     private:

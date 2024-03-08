@@ -26,6 +26,9 @@ Screen* ChangeToScreen(Screen* currentScreen, int screen) {
 	Screen* nextScreen;
 	// Init next screen
 	switch (screen) {
+		case SPLASH:
+			nextScreen = new SplashScreen();
+			break;
 		case LOGO:
 			nextScreen = new LogoScreen();
 			break;

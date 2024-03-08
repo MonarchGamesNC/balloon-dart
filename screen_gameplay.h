@@ -1,7 +1,7 @@
 #include <vector>
 #include "screen.h"
 #include "resourcemanager.h"
-#include "balloon_spawner.h"
+#include "balloon_spawner.hpp"
 
 class GameplayScreen : public Screen {
 public:
@@ -14,6 +14,9 @@ public:
 	GameScreen GetNextScreen();
 private:
 	bool screenReady = false;
+	bool finishScreen = false;
+	float exitButtonTimer = 0;
+
 	Texture bgGraphic;
 	Music bgMusic;
 	Sound popSound;

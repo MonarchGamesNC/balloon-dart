@@ -2,6 +2,7 @@
 #include "raylib.h"
 #include "screen_gameplay.h"
 #include "score.h"
+#include "balloon_spawner.hpp"
 
 #define BALLOON_SPAWN_RATE 3.0f
 
@@ -11,6 +12,8 @@ GameplayScreen::GameplayScreen() {
 	if (!screenReady) {
 		Init();
 		score = 0;
+		finishScreen = 0;
+		exitButtonTimer = 0.75; // needs to hold for 1 seconds
 	}
 }
 
@@ -48,6 +51,25 @@ void GameplayScreen::Update() {
 		ballonSpawner.SetSpawnVelocity(Vector2{ 0, -4.0f });
 	}
 
+	if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+		Vector2 mousePos = GetMousePosition();
+		// Check if mouse is over exit button
+		// For more than 5 seconds
+		if (CheckCollisionPointRec(mousePos, Rectangle { 10, 50, 100, 32 })) {
+			exitButtonTimer -= GetFrameTime();
+			if (exitButtonTimer <= 0) {
+				finishScreen = 1;
+			}
+
+			// If the button is released, reset the timer
+			if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+				exitButtonTimer = 1;
+			} 
+		}
+
+		
+	}
+
 	UpdateMusicStream(bgMusic);	
 	ballonSpawner.Update();
 }
@@ -57,7 +79,7 @@ void GameplayScreen::Draw() {
 
 	// Draw score
 	DrawTextEx(font, TextFormat("Score %i", score), Vector2 { 10, 10 }, 32, 0, WHITE);
-
+	DrawTextEx(font, "Exit", Vector2 { 10, 50 }, 32, 0, WHITE);
 	ballonSpawner.Draw();
 }
 
@@ -87,11 +109,11 @@ void GameplayScreen::Unload() {
 }
 
 int GameplayScreen::Finish() {
-    return 0;
+    return finishScreen;
 }
 
 GameScreen GameplayScreen::GetNextScreen() {
-	return CREDITS;
+	return SPLASH;
 }
 
 void GameplayScreen::loadTextures() {
