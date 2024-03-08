@@ -55,7 +55,7 @@ void GameplayScreen::Update() {
 		Vector2 mousePos = GetMousePosition();
 		// Check if mouse is over exit button
 		// For more than 5 seconds
-		if (CheckCollisionPointRec(mousePos, Rectangle { 10, 50, 100, 32 })) {
+		if (CheckCollisionPointRec(mousePos, Rectangle { (float)GetScreenWidth()-60, 10, 55, 26 })) {
 			exitButtonTimer -= GetFrameTime();
 			if (exitButtonTimer <= 0) {
 				finishScreen = 1;
@@ -66,7 +66,6 @@ void GameplayScreen::Update() {
 				exitButtonTimer = 1;
 			} 
 		}
-
 		
 	}
 
@@ -79,7 +78,8 @@ void GameplayScreen::Draw() {
 
 	// Draw score
 	DrawTextEx(font, TextFormat("Score %i", score), Vector2 { 10, 10 }, 32, 0, WHITE);
-	DrawTextEx(font, "Exit", Vector2 { 10, 50 }, 32, 0, WHITE);
+	DrawTextEx(font, "Exit", Vector2 { (float)GetScreenWidth()-60, 10 }, 32, 0, WHITE);
+	DrawRectangle((float)GetScreenWidth()-60, 10, 55, 26 , Fade(BLACK, 0.5));
 	ballonSpawner.Draw();
 }
 
