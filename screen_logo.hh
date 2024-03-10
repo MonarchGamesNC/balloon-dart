@@ -1,5 +1,5 @@
-#include "screen.h"
-#include "raylib.h"
+#include "screen.hh"
+#include <raylib.h>
 class LogoScreen : public Screen {
 public:
 	LogoScreen();

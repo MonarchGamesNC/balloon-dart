@@ -1,4 +1,4 @@
-#include "resourcemanager.h"
+#include "resourcemanager.hh"
 
 void ResourceManager::LoadResources() {
   BlueBaloon = LoadTexture("./assets/gfx/blue_balloon_1.png");

@@ -1,6 +1,6 @@
 #include <iostream>
-#include "raylib.h"
-#include "balloon.h"
+#include <raylib.h>
+#include "balloon.hh"
 
 extern int score;
 

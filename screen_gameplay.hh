@@ -1,7 +1,7 @@
 #include <vector>
-#include "screen.h"
-#include "resourcemanager.h"
-#include "balloon_spawner.hpp"
+#include "screen.hh"
+#include "resourcemanager.hh"
+#include "balloon_spawner.hh"
 
 class GameplayScreen : public Screen {
 public:

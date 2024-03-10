@@ -1,8 +1,7 @@
 #ifndef BALLOONSPAWNER_H
 #define BALLOONSPAWNER_H
 #include <vector>
-#include "balloon.h"
-#include "timer.h"
+#include "balloon.hh"
 
 class BalloonSpawner {
     public:
@@ -19,7 +18,6 @@ class BalloonSpawner {
 		float SpawnRate();
 
     private:
-        Timer timer;
         int lastSpawnPointIndex;
         float spawnRate;
         Vector2 spawnVelocity;

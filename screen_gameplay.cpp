@@ -1,8 +1,8 @@
 #include <iostream>
-#include "raylib.h"
-#include "screen_gameplay.h"
-#include "score.h"
-#include "balloon_spawner.hpp"
+#include <raylib.h>
+#include "screen_gameplay.hh"
+#include "score.hh"
+#include "balloon_spawner.hh"
 
 #define BALLOON_SPAWN_RATE 3.0f
 

@@ -1,6 +1,6 @@
 #include <raylib.h>
 #include <iostream>
-#include "timer.h"
+#include "timer.hh"
 
 Timer::Timer() {
     this->lifetimeTime = 0.0f;

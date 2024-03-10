@@ -1,5 +1,5 @@
-#include "screen_splash.h"
-#include "raylib.h"
+#include <raylib.h>
+#include "screen_splash.hh"
 
 SplashScreen::SplashScreen() {
 	Init();

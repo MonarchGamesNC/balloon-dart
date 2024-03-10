@@ -1,7 +1,6 @@
 #include <vector>
-#include "raylib.h"
-#include "balloon_spawner.hpp"
-
+#include <raylib.h>
+#include "balloon_spawner.hh"
 
 BalloonSpawner::BalloonSpawner() {/* Default constructor */}
 

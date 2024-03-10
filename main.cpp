@@ -10,10 +10,11 @@
 // #endif
 
 #include <iostream>
-#include "raylib.h"
-#include "screen_logo.h"
-#include "screen_splash.h"
-#include "screen_gameplay.h"
+#include <raylib.h>
+#include "screen_logo.hh"
+#include "screen_splash.hh"
+#include "screen_gameplay.hh"
+#include "screen_menu.hh"
 
 #define GAME_TITLE "Balloon Popper Game"
 
@@ -85,7 +86,7 @@ int main(void) {
 	//--------------------------------------------------------------------------------------
 	
 	// Screen* currentScreen = new LogoScreen();
-  	Screen* currentScreen = new GameplayScreen();
+  	Screen* currentScreen = new MainMenuScreen();
 	
 	// Main game loop
 	while (!WindowShouldClose()) {   // Detect window close button or ESC key

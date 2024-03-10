@@ -1,6 +1,6 @@
 #ifndef RESOURCEMANAGER_H
 #define RESOURCEMANAGER_H
-#include "raylib.h"
+#include <raylib.h>
 
 class ResourceManager {
 public:

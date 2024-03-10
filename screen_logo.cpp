@@ -1,7 +1,7 @@
 #include <cstddef>
+#include <raylib.h>
 
-#include "screen_logo.h"
-#include "raylib.h"
+#include "screen_logo.hh"
 
 LogoScreen::LogoScreen() {
 	Init();
