@@ -15,6 +15,7 @@
 #include "screen_splash.hh"
 #include "screen_gameplay.hh"
 #include "screen_menu.hh"
+#include "screen_playground.hh"
 
 #define GAME_TITLE "Balloon Popper Game"
 
@@ -86,7 +87,7 @@ int main(void) {
 	//--------------------------------------------------------------------------------------
 	
 	// Screen* currentScreen = new LogoScreen();
-  	Screen* currentScreen = new MainMenuScreen();
+  	Screen* currentScreen = new PlaygroundScreen();
 	
 	// Main game loop
 	while (!WindowShouldClose()) {   // Detect window close button or ESC key

@@ -1,5 +1,6 @@
 *.exe
 *.dsym
+*.DS_Store
 main
-balloon-dart-*
-balloon-dart.*
+!balloon-dart.10x
+balloon-dart*
