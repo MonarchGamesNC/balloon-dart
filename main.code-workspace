@@ -3,10 +3,6 @@
 		{
 			"path": "."
 		},
-		{
-			"name": "header files",
-			"path": ".",
-		}
 	],
 	"settings": {
 		"files.associations": {

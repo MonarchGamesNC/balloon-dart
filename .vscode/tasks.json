@@ -51,6 +51,33 @@
             ]
         },
         {
+            "label": "build web",
+            "type": "process",
+            "command": "make",
+            "args": [
+                "PLATFORM=PLATFORM_WEB",
+                "BUILD_MODE=DEBUG",
+                "CC=emcc",
+            ],
+            "linux": {
+                "args": [
+                    "RAYLIB_PATH=/workspaces/balloon-dart/raylib",
+                    "PROJECT_NAME=${workspaceFolderBasename}",
+                    "OBJS=*.cpp",
+                    "BUILD_MODE=DEBUG",
+                    "PLATFORM=PLATFORM_WEB",
+                    "CC=emcc",
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
             "label": "build release",
             "type": "process",
             "command": "make",

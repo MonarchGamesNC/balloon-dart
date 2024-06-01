@@ -1,13 +1,6 @@
-// #ifndef NDEBUG
-// // Production builds should set NDEBUG=1
-// #define NDEBUG false
-// #else
-// #define NDEBUG true
-// #endif
-
-// #ifndef DEBUG
-// #define DEBUG !NDEBUG
-// #endif
+#if defined(PLATFORM_WEB)
+    #include <emscripten/emscripten.h>
+#endif
 
 #include <iostream>
 #include <raylib.h>
@@ -18,6 +11,8 @@
 #include "screen_playground.hh"
 
 #define GAME_TITLE "Balloon Popper Game"
+
+Screen* currentScreen = NULL;
 
 // TODO:: Enable web version of Raylib
 //Change to screen, no transition
@@ -45,6 +40,29 @@ Screen* ChangeToScreen(Screen* currentScreen, int screen) {
 	return nextScreen;
 };
 
+void UpdateDrawFrame(void) {
+	// Update
+	//----------------------------------------------------------------------------------
+	// 
+	//----------------------------------------------------------------------------------
+	
+	currentScreen->Update();
+	if (currentScreen->Finish() == 1) {
+		currentScreen = ChangeToScreen(
+			currentScreen,
+			currentScreen->GetNextScreen()
+		);
+	}
+
+	// Draw
+    //----------------------------------------------------------------------------------
+    BeginDrawing();
+    	ClearBackground(RAYWHITE);
+		currentScreen->Draw();
+	EndDrawing();
+    //----------------------------------------------------------------------------------
+}
+
 
 //------------------------------------------------------------------------------------
 // Program main entry point
@@ -56,7 +74,6 @@ int main(void) {
 		SetTraceLogLevel(LOG_DEBUG);
 	#endif
 
-		//emscripten_set_main_loop(mainLoop, 0, 1);
 
 	// Initialization
 	//--------------------------------------------------------------------------------------
@@ -64,62 +81,28 @@ int main(void) {
 	const int screenHeight = 720;
 
 	InitWindow(screenWidth, screenHeight, GAME_TITLE);
+	InitAudioDevice();              // Initialize audio device
+
+	currentScreen = new PlaygroundScreen();
+
+	#if defined(PLATFORM_WEB)
+    emscripten_set_main_loop(UpdateDrawFrame, 0, 1);
+	#else
+
 	SetWindowState(FLAG_WINDOW_RESIZABLE); // Allow the user to resize the window
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
-	InitAudioDevice();              // Initialize audio device
-
-  // Create balloon spawner
-        // Give screen width and height
-        // Allow for a max number of balloons
-        // Spawn balloons at random locations
-    // Screens
-		// Splash screen with Raylib logo
-		// Start screen
-			// Tap to start
-		// Game screen
-			// Game loop for balloon poppings
-			// Small back button / gear button
-		// Setting screen for sound volume?
-			// Maybe save setting somewhere?
-			// If not notify it's per play session
-
-	//--------------------------------------------------------------------------------------
-	
-	// Screen* currentScreen = new LogoScreen();
-  	Screen* currentScreen = new PlaygroundScreen();
-	
-	// Main game loop
 	while (!WindowShouldClose()) {   // Detect window close button or ESC key
-		// Update
-		//----------------------------------------------------------------------------------
-		// 
-		//----------------------------------------------------------------------------------
-		
-		currentScreen->Update();
-		if (currentScreen->Finish() == 1) {
-    	currentScreen = ChangeToScreen(
-			currentScreen,
-			currentScreen->GetNextScreen()
-		);
-    }
-  
-		// Draw
-    //----------------------------------------------------------------------------------
-    BeginDrawing();
-    	ClearBackground(RAYWHITE);
-		currentScreen->Draw();
-	EndDrawing();
-    //----------------------------------------------------------------------------------
-  }
+		UpdateDrawFrame();
+  	}
+	#endif
 
 	// De-Initialization
 	currentScreen->Unload(); // Unload current screen data before closing
-
-  //--------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------
 	CloseAudioDevice(); // Close the audio device
 	CloseWindow();        // Close window and OpenGL context
-  //--------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------
 
   return 0;
 }
