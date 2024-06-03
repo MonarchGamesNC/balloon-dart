@@ -1,6 +1,7 @@
 #include <iostream>
 #include <raylib.h>
 #include "balloon.hh"
+#include "animated_sprite.hh"
 
 extern int score;
 
@@ -11,15 +12,16 @@ Balloon::Balloon() {
 
 Balloon::Balloon(Texture2D _balloonTexture, Vector2 _position, Sound _popSound, Vector2 _velocity) {
     // Load texture internally?
-    balloonTexture = _balloonTexture;
     position = _position;
     velocity = _velocity;
     popSound = _popSound;
     scaleFactor = 0.5f;
 
-    // Set center
-    center = Vector2{ (float)(balloonTexture.width*scaleFactor) / 2, (float)(balloonTexture.height * scaleFactor) / 2 };
-
+    this->sprite = AnimatedSprite(_balloonTexture, position, 2, 3, 12);
+    this->sprite.AddAnimation("idle",{ { 0, 0 } });
+    this->sprite.AddAnimation( "pop",{ { 0, 0 }, { 1, 0 }, { 2, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }});
+    this->sprite.PlayAnimation("idle");
+    
     // These values are hardcoded for the balloon textures I am using
     // The base image is 512x512 but scaling down by 0.5f
     // The balloon is in the center of the image with the rest being transparent
@@ -40,42 +42,36 @@ void Balloon::Draw() {
         return;
     }
 
-    Texture2D texture = this->balloonTexture;
-    float width = (float)texture.width;
-    float height = (float)texture.height;
-
-    DrawTexturePro(
-        texture,
-        Rectangle{ 0, 0, width, height },
-        Rectangle{ position.x, position.y, (float)(width*scaleFactor), float(height*scaleFactor)},
-        this->center,
-        0,
-        WHITE
-    );
-
+    this->sprite.Draw();
 }
 
 // Update each frame
 void Balloon::Update() {
+    if (this->sprite.GetCurrentAnimationName() == "pop" && this->sprite.IsAnimationFinished()) {
+        isPopped = true;
+    }
+    
+    if (isPopped) return;
+
     if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
         // Check if mouse is in ballon center circle
-        if (IsClicked(GetMousePosition())) {
+        if (!this->isPopping && IsClicked(GetMousePosition())) {
             score += 1;
             Pop();
         }
     }
 
-    if (isPopped) return;
+    this->sprite.Update(); // Position is updated in the sprite
 
-    position.x += (velocity.x * GetFrameTime()) * 75;
-    position.y += (velocity.y * GetFrameTime()) * 75;
+    this->sprite.position.x += (velocity.x * GetFrameTime()) * 75;
+    this->sprite.position.y += (velocity.y * GetFrameTime()) * 75;
 	
 	// Update collider
-    collider.x = position.x - (collider.width / 2);
-    collider.y = position.y - (collider.height / 2);
+    collider.x = this->sprite.position.x - (collider.width / 2);
+    collider.y =  this->sprite.position.y - (collider.height / 2);
     
 	// Check if balloon is off screen
-    if (position.y < -250) Pop(false);
+    if (this->sprite.position.y < -250) Pop(false);
 }
 
 bool Balloon::IsClicked(Vector2 clickPosition) {
@@ -94,10 +90,13 @@ bool Balloon::IsPopped() {
 // Pop balloon (hide balloon)
 // move off screen then delete
 void Balloon::Pop(bool playSound) {
+    if (!this->isPopping) {
+        this->isPopping = true;
+        this->sprite.PlayAnimation("pop");
+    }
+    
     if (playSound) PlaySound(popSound);
     
-    // Hide the balloon... later animate pop
-    isPopped = true;
     collider.x = (float)(GetScreenWidth() * 2);
     collider.y = (float)(GetScreenHeight() * 2);
     position = Vector2{ (float)(GetScreenWidth() *2), (float)GetScreenHeight() * 2 };

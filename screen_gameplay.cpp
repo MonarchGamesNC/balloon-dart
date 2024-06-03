@@ -118,8 +118,8 @@ GameScreen GameplayScreen::GetNextScreen() {
 
 void GameplayScreen::loadTextures() {
 	// Load all the textures we need for now
-	this->textures.emplace_back(LoadTexture("./assets/gfx/blue_balloon_1.png"));
-	this->textures.emplace_back(LoadTexture("./assets/gfx/green_balloon_1.png"));
-	this->textures.emplace_back(LoadTexture("./assets/gfx/orange_balloon_1.png"));
-	this->textures.emplace_back(LoadTexture("./assets/gfx/pink_balloon_1.png"));
+	this->textures.emplace_back(LoadTexture("./assets/gfx/blue_balloon.png"));
+	this->textures.emplace_back(LoadTexture("./assets/gfx/green_balloon.png"));
+	this->textures.emplace_back(LoadTexture("./assets/gfx/orange_balloon.png"));
+	this->textures.emplace_back(LoadTexture("./assets/gfx/pink_balloon.png"));
 }

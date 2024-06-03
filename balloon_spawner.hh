@@ -8,9 +8,7 @@ class BalloonSpawner {
         void Spawn();
         void Update();
         void Draw();
-        void UnloadTextures();
         BalloonSpawner();
-		BalloonSpawner(std::vector<Texture2D> _textures, float spawnRate);
         BalloonSpawner(std::vector<Texture2D> _textures, Sound popSound,  float spawnRate);
 
         void SetSpawnVelocity(Vector2 velocity);

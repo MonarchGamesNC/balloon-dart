@@ -6,80 +6,57 @@ PlaygroundScreen::PlaygroundScreen() {
 
 void PlaygroundScreen::Init() {
     this->graphic = LoadTexture("./assets/gfx/blue_balloon.png");
+    this->graphic2 = LoadTexture("./assets/gfx/blue_balloon.png");
+    this->sprite = AnimatedSprite(this->graphic, Vector2{ 400, 300 }, 2, 3, 6);
+
+    this->sprite.AddAnimation(
+        "idle",
+        {
+            Vector2{ 0, 0 }
+        }
+    );
+
+    this->sprite.AddAnimation(
+        "pop",
+        {
+            Vector2{ 0, 0 },
+            Vector2{ 1, 0 },
+            Vector2{ 2, 0 },
+            Vector2{ 0, 1 },
+            Vector2{ 1, 1 },
+            Vector2{ 2, 1 },
+        }
+    );
+
+    this->sprite.PlayAnimation("pop");
+
+    this->balloon = Balloon(
+        this->graphic2,
+        Vector2{ 200, 300 },
+        Sound(),
+        Vector2{ 0, -2.0f}
+    );
 }
 
-void PlaygroundScreen::Update() {
-    if (IsKeyPressed(KEY_ENTER)) {
-        if (horizontalFrame == 2){
-            horizontalFrame = 0;
-
-            if (verticalFrame == 0) {
-                verticalFrame = 1;
-            } else {
-                verticalFrame = 0;
-            }
-        } else {
-            horizontalFrame++;
-        }
+void PlaygroundScreen::Update() { 
+    if (!this->sprite.IsAnimationFinished()) {
+        this->sprite.Update();
     }
+
+    this->balloon.Update();
 }
 
 void PlaygroundScreen::Draw() {
-    if (horizontalFrame == 2 && verticalFrame == 1) {
-       return;
+    if (!this->sprite.IsAnimationFinished()) {
+        this->sprite.Draw();
     }
 
-    float scaleFactor = 0.5f;
-    Vector2 position = { 450, 300 };
-    Texture2D texture = this->graphic;
-
-    float width = (float)(texture.width/3);
-    float height = (float)(texture.height/2);
-    
-    // Set center
-    Vector2 center = Vector2{
-        (float)(width*scaleFactor) / 2,
-        (float)(height * scaleFactor) / 2
-    };
-
-    Rectangle finalPosition = Rectangle{
-        position.x,
-        position.y,
-        (float)(width*scaleFactor),
-        float(height*scaleFactor)
-    };
-
-    Rectangle framePosition = Rectangle{
-        width*horizontalFrame,
-        height*verticalFrame,
-        width,
-        height
-    };
-
-    DrawTexturePro(
-        texture,
-        framePosition,
-        finalPosition,
-        center,
-        0,
-        WHITE
-    );
-
-    float x = finalPosition.x - center.x;
-    float y = finalPosition.y - center.y;
-    Vector2 topLeft = (Vector2){ x, y };
-    Vector2 topRight = (Vector2){ x + finalPosition.width, y };
-    Vector2 bottomLeft = (Vector2){ x, y + finalPosition.height };
-    Vector2 bottomRight = (Vector2){ x + finalPosition.width, y + finalPosition.height };
-
-    DrawLineEx(topLeft, topRight, 2, RED);
-    DrawLineEx(topRight, bottomRight, 2, RED);
-    DrawLineEx(bottomRight, bottomLeft, 2, RED);
-    DrawLineEx(bottomLeft, topLeft, 2, RED);
-
+    this->balloon.Draw();
 }
 
 void PlaygroundScreen::Unload() {
+    UnloadTexture(this->graphic);
+    UnloadTexture(this->graphic2);
 }
 
 int PlaygroundScreen::Finish() {

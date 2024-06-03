@@ -1,10 +1,12 @@
+#ifndef BALLOON_H
+#define BALLOON_H
 #include <raylib.h>
+#include "animated_sprite.hh"
 
 class Balloon {
     public:
-        Vector2 center;
         Vector2 position;
-        Texture2D balloonTexture;
+        AnimatedSprite sprite;
         Sound popSound;
 
 		// Constructors
@@ -18,7 +20,9 @@ class Balloon {
         bool IsPopped();
     private:
         bool isPopped = false;
+        bool isPopping = false;
         float scaleFactor;
         Rectangle collider;
         Vector2 velocity;
 };
+#endif

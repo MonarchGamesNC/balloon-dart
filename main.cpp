@@ -1,23 +1,13 @@
-// #ifndef NDEBUG
-// // Production builds should set NDEBUG=1
-// #define NDEBUG false
-// #else
-// #define NDEBUG true
-// #endif
-
-// #ifndef DEBUG
-// #define DEBUG !NDEBUG
-// #endif
-
 #include <iostream>
 #include <raylib.h>
+
 #include "screen_logo.hh"
 #include "screen_splash.hh"
 #include "screen_gameplay.hh"
 #include "screen_menu.hh"
 #include "screen_playground.hh"
 
-#define GAME_TITLE "Balloon Popper Game"
+#define GAME_TITLE "Balloon Pop"
 
 // TODO:: Enable web version of Raylib
 //Change to screen, no transition
@@ -45,7 +35,6 @@ Screen* ChangeToScreen(Screen* currentScreen, int screen) {
 	return nextScreen;
 };
 
-
 //------------------------------------------------------------------------------------
 // Program main entry point
 //------------------------------------------------------------------------------------
@@ -65,6 +54,7 @@ int main(void) {
 
 	InitWindow(screenWidth, screenHeight, GAME_TITLE);
 	SetWindowState(FLAG_WINDOW_RESIZABLE); // Allow the user to resize the window
+	// SetWindowState(FLAG_BORDERLESS_WINDOWED_MODE);
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
 	InitAudioDevice();              // Initialize audio device
@@ -86,8 +76,8 @@ int main(void) {
 
 	//--------------------------------------------------------------------------------------
 	
-	// Screen* currentScreen = new LogoScreen();
-  	Screen* currentScreen = new PlaygroundScreen();
+	Screen* currentScreen = new SplashScreen();
+  	// Screen* currentScreen = new PlaygroundScreen();
 	
 	// Main game loop
 	while (!WindowShouldClose()) {   // Detect window close button or ESC key

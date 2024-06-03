@@ -1,5 +1,7 @@
 #include <raylib.h>
 #include "screen.hh"
+#include "animated_sprite.hh"
+#include "balloon.hh"
 
 class PlaygroundScreen : public Screen {
 public:
@@ -12,9 +14,9 @@ public:
 	GameScreen GetNextScreen();
 private:
 	int finishScreen = 0;
-    int frame = 0;
-    int horizontalFrame = 0;
-    int verticalFrame = 0;
     
+	AnimatedSprite sprite;
     Texture2D graphic;
+	Texture2D graphic2;
+	Balloon balloon;
 };

@@ -89,13 +89,6 @@ void BalloonSpawner::Draw() {
     }
 }
 
-void BalloonSpawner::UnloadTextures() {
-    for (int i = 0; i < (int)balloonsSpawned.size(); i++) {
-        UnloadTexture(balloonsSpawned[i].balloonTexture);
-    }
-
-}
-
 void BalloonSpawner::spawnTick() {
 	if (currentTime <= 0) {
         Spawn();
