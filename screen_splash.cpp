@@ -7,19 +7,19 @@ SplashScreen::SplashScreen() {
 
 void SplashScreen::Init() {
 	finishScreen = 0;
-  framesCounter = 0;
-  lettersCount = 0;
+	framesCounter = 0;
+	lettersCount = 0;
 
-  logoPositionX = GetScreenWidth()/2 - 128;
-  logoPositionY = GetScreenHeight()/2 - 128;
+	logoPositionX = GetScreenWidth()/2 - 128;
+	logoPositionY = GetScreenHeight()/2 - 128;
 
-  topSideRecWidth = 16;
-  leftSideRecHeight = 16;
-  bottomSideRecWidth = 16;
-  rightSideRecHeight = 16;
+	topSideRecWidth = 16;
+	leftSideRecHeight = 16;
+	bottomSideRecWidth = 16;
+	rightSideRecHeight = 16;
 
-  state = 0;
-  alpha = 1.0f;
+	state = 0;
+	alpha = 1.0f;
 }
 
 void SplashScreen::Draw() {
@@ -89,6 +89,8 @@ void SplashScreen::Update() {
 void SplashScreen::Unload() {}
 
 int SplashScreen::Finish() {  return finishScreen; }
+
+bool SplashScreen::Closed() { return false; }
 
 GameScreen SplashScreen::GetNextScreen() {
 	return LOGO;

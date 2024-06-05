@@ -8,6 +8,7 @@ public:
 	void Update();
 	void Unload();
 	int Finish();
+	bool Closed();
 	GameScreen GetNextScreen();
 private:
 	Font font;

@@ -112,9 +112,12 @@ int GameplayScreen::Finish() {
     return finishScreen;
 }
 
+bool GameplayScreen::Closed() { return false; }
+
 GameScreen GameplayScreen::GetNextScreen() {
-	return SPLASH;
+	return MAINMENU;
 }
+
 
 void GameplayScreen::loadTextures() {
 	// Load all the textures we need for now

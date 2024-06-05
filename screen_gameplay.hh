@@ -10,6 +10,7 @@ public:
 	void Update();
 	void Unload();
 	int Finish();
+	bool Closed();
 	GameScreen GetNextScreen();
 private:
 	bool screenReady = false;

@@ -1,7 +1,8 @@
 #include <cstddef>
-#include <raylib.h>
 #include <cstring>
 #include "screen_menu.hh"
+
+bool isSameColor(Color, Color);
 
 MainMenuScreen::MainMenuScreen() {
 	Init();
@@ -23,88 +24,69 @@ void MainMenuScreen::Init() {
 
 	state = 0;
 	alpha = 1.0f;
+
+    startMenuItemLoc = Vector2{(float)screenCenterX - 65, (float)screenCenterY};
+    startMenuItemRect = Rectangle {startMenuItemLoc.x, startMenuItemLoc.y, menuItemWidth, menuItemHeight};
+
+    creditsMenuItemLoc = Vector2{(float)screenCenterX - 83, (float)screenCenterY + 50};
+    creditsMenuItemRect = Rectangle {creditsMenuItemLoc.x, creditsMenuItemLoc.y, menuItemWidth, menuItemHeight};
+
+    exitMenuItemLoc = Vector2{(float)screenCenterX - 50, (float)screenCenterY + 100};
+    exitMenuItemRect = Rectangle {exitMenuItemLoc.x, exitMenuItemLoc.y, menuItemWidth, menuItemHeight};
 }
 
 void MainMenuScreen::Draw() {
     // Draw bg to entire screen
-	DrawTexturePro(
-        bgGraphic,
-		Rectangle { 0, 0, (float)bgGraphic.width,  (float)bgGraphic.height },
-		Rectangle { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() },
-		Vector2 { 0, 0 },
-        0,
-        WHITE
-    );
-	// if (state == 0) {    // Draw "raylib" text-write animation + "powered by"
-	// 	DrawTextEx(
-	// 		font,
-	// 		TextSubtext("Monarch Games", 0, lettersCount),
-	// 		Vector2{ (float)logoPositionX, (float)logoPositionY},
-	// 		72,
-	// 		0,
-	// 		Fade(BLACK, alpha)
-	// 	); // Draw text using font and additional parameters
-	// }
+    Rectangle bgSource = Rectangle { 0, 0, (float)bgGraphic.width,  (float)bgGraphic.height };
+    Rectangle bgDest = Rectangle { 0, 0, (float)GetScreenWidth(), (float)GetScreenHeight() };
+
+	DrawTexturePro(bgGraphic, bgSource, bgDest, Vector2{}, 0, WHITE);
     
-    DrawTextEx(
-        titleFont,
-        "Balloon Popper",
-        Vector2{ (float)titlePositionX, (float)titlePositionY},
-        72,
-        0,
-        BLUE
-    );
+    // TITLE
+    Vector2 titleLoc = Vector2{ (float)titlePositionX, (float)titlePositionY};
+    DrawTextEx(titleFont, "Balloon Popper", titleLoc, 72, 0, BLUE);
 
+    // Menu
+    DrawTextEx(menuItemFont, "Start", startMenuItemLoc, 48, 0, startMenuItemColor);
+    DrawTextEx(menuItemFont, "Credits", creditsMenuItemLoc, 48, 0, creditsMenuItemColor);
 
-    DrawTextEx(
-        menuItemFont,
-        "Start",
-        Vector2{ (float)screenCenterX - 65, (float)screenCenterY},
-        48,
-        0,
-        menuColor
-    );
-
-
-    DrawTextEx(
-        menuItemFont,
-        "Credits",
-        Vector2{ (float)screenCenterX - 83, (float)screenCenterY + 50},
-        48,
-        0,
-        WHITE
-    );
+    #if !PLATFORM_WEB
+    DrawTextEx(menuItemFont, "Exit", exitMenuItemLoc, 48, 0, exitMenuItemColor);
+    #endif
 }
 
 void MainMenuScreen::Update() {
     // Check if mouse is over start button
-    if (CheckCollisionPointRec(GetMousePosition(), Rectangle { (float)screenCenterX - 65, (float)screenCenterY, 130, 48 })) {
-        menuColor = BLACK;
+    if (CheckCollisionPointRec(GetMousePosition(), startMenuItemRect)) {
+        startMenuItemColor = menuItemHoverColor;
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
             nextScreen = GAMEPLAY;
             finishScreen = 1;
         }
+    } else if (isSameColor(startMenuItemColor, menuItemHoverColor)) {
+        startMenuItemColor = menuItemNormalColor;
     }
-    //  else if (std::strcmp(menuColor, "BLACK") == 0) {
-    //     menuColor = WHITE;
-    // }
-// 	if (state == 0) {    // State 3: "raylib" text-write animation logic
-//     framesCounter++;
-// 		if (lettersCount < 14) {
-// 			if (framesCounter/12) { // Every 12 frames, one more letter!
-// 				lettersCount++;
-// 				framesCounter = 0;
-// 			}
-// 		} else {    // When all letters have appeared, just fade out everything
-// 			if (framesCounter > 200) {
-// 				alpha -= 0.02f;
-// 				if (alpha <= 0.0f) {
-// 					alpha = 0.0f;
-// 					finishScreen = 1;   // Jump to next screen
-// 				}
-// 			}
-// 		}
-//   }
+
+    if (CheckCollisionPointRec(GetMousePosition(), creditsMenuItemRect)) {
+        creditsMenuItemColor = menuItemHoverColor;
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+            nextScreen = CREDITS;
+            finishScreen = 1;
+        }
+    } else if (isSameColor(creditsMenuItemColor, menuItemHoverColor)) {
+        creditsMenuItemColor = menuItemNormalColor;
+    } 
+
+    #if !PLATFORM_WEB
+    if (CheckCollisionPointRec(GetMousePosition(), exitMenuItemRect)) {
+        exitMenuItemColor = menuItemHoverColor;
+        if (IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+            state = 50; // 50 is closed for now
+        }
+    } else if (isSameColor(exitMenuItemColor, menuItemHoverColor)) {
+        exitMenuItemColor = menuItemNormalColor;
+    } 
+    #endif
 }
 
 void MainMenuScreen::Unload() {
@@ -118,3 +100,13 @@ GameScreen MainMenuScreen::GetNextScreen() {
 }
 
 int MainMenuScreen::Finish() {  return finishScreen; }
+
+bool MainMenuScreen::Closed() { return state == 50; }
+
+bool isSameColor(Color a, Color b) {
+    if (a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a) {
+        return true;
+    }
+
+    return false;
+}

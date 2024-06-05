@@ -11,6 +11,7 @@ public:
 	void Update();
 	void Unload();
 	int Finish();
+	bool Closed();
 	GameScreen GetNextScreen();
 private:
 	int finishScreen = 0;

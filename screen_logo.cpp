@@ -36,7 +36,13 @@ void LogoScreen::Draw() {
 
 void LogoScreen::Update() {
 	if (state == 0) {    // State 3: "raylib" text-write animation logic
-    framesCounter++;
+		if (IsKeyPressed(KEY_ENTER) || IsKeyPressed(KEY_SPACE)) {
+			framesCounter = 195;
+			lettersCount = 14;
+		}
+
+    	framesCounter++;
+		
 		if (lettersCount < 14) {
 			if (framesCounter/12) { // Every 12 frames, one more letter!
 				lettersCount++;
@@ -51,15 +57,15 @@ void LogoScreen::Update() {
 				}
 			}
 		}
-  }
+	}
 }
 
 void LogoScreen::Unload() {
 	UnloadFont(font);
 }
 
-GameScreen LogoScreen::GetNextScreen() {
-	return GAMEPLAY;
-}
-
+// Finish transitions to next screen
 int LogoScreen::Finish() {  return finishScreen; }
+// Closed closes the entire window loop
+bool LogoScreen::Closed() { return false; }
+GameScreen LogoScreen::GetNextScreen() { return MAINMENU; }

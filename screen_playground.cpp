@@ -63,6 +63,8 @@ int PlaygroundScreen::Finish() {
     return finishScreen;
 }
 
+bool PlaygroundScreen::Closed() { return false; }
+
 GameScreen PlaygroundScreen::GetNextScreen() {
     return SPLASH;
 }
