@@ -6,6 +6,7 @@
 #include "screen_gameplay.hh"
 #include "screen_menu.hh"
 #include "screen_playground.hh"
+#include "screen_credits.hh"
 
 #define GAME_TITLE "Balloon Pop"
 
@@ -36,7 +37,7 @@ int main(void) {
 	InitAudioDevice();              // Initialize audio device
 
 	//--------------------------------------------------------------------------------------
-	Screen* currentScreen = new SplashScreen(); // default screen to start at
+	Screen* currentScreen = new CreditsScreen(); // default screen to start at
 	
 	// Main game loop
 	while (!WindowShouldClose()) {   // Detect window close button or ESC key

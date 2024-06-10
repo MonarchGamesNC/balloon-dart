@@ -28,3 +28,5 @@ RUN cd /opt/raylib/src && \
 # Mount the source code
 VOLUME /src
 WORKDIR /src
+
+ENTRYPOINT [ "make PLATFORM=PLATFORM_WEB PROJECT_NAME=balloon-pop OBJS=*.cpp BUILD_MODE=RELEASE RAYLIB_PATH=/opt/raylib PRELOAD_FILE=./assets/ -B -e" ]
