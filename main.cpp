@@ -37,7 +37,7 @@ int main(void) {
 	InitAudioDevice();              // Initialize audio device
 
 	//--------------------------------------------------------------------------------------
-	Screen* currentScreen = new CreditsScreen(); // default screen to start at
+	Screen* currentScreen = new MainMenuScreen(); // default screen to start at
 	
 	// Main game loop
 	while (!WindowShouldClose()) {   // Detect window close button or ESC key
@@ -98,6 +98,9 @@ Screen* ChangeToScreen(Screen* currentScreen, GameScreen screen) {
 			break;
 		case MAINMENU:
 			nextScreen = new MainMenuScreen();
+			break;
+		case CREDITS:
+			nextScreen = new CreditsScreen();
 			break;
 		default: 
 			nextScreen = new GameplayScreen();
