@@ -30,14 +30,14 @@ int main(void) {
 	const int screenHeight = 720;
 
 	InitWindow(screenWidth, screenHeight, GAME_TITLE);
-	// SetWindowState(FLAG_WINDOW_RESIZABLE); // Allow the user to resize the window
-	SetWindowState(FLAG_BORDERLESS_WINDOWED_MODE);
+	SetWindowState(FLAG_WINDOW_RESIZABLE); // Allow the user to resize the window
+	// SetWindowState(FLAG_BORDERLESS_WINDOWED_MODE);
 	SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
 
 	InitAudioDevice();              // Initialize audio device
 
 	//--------------------------------------------------------------------------------------
-	Screen* currentScreen = new MainMenuScreen(); // default screen to start at
+	Screen* currentScreen = new CreditsScreen(); // default screen to start at
 	
 	// Main game loop
 	while (!WindowShouldClose()) {   // Detect window close button or ESC key

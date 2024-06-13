@@ -79,7 +79,7 @@ void AnimatedSprite::Update() {
         index = this->currentAnimation.Frames.size()-1;
     } else {
         index = (int)((GetTime() - this->currentAnimation.StartTime) * this->currentAnimation.FramesPerSecond) % this->currentAnimation.Frames.size();
-        if (index == this->currentAnimation.Frames.size()-1) {
+        if (index == (int)this->currentAnimation.Frames.size()-1) {
             this->currentAnimation.Finished = true;
             return;
         }
